@@ -1,0 +1,4 @@
+data/mysql/*
+data/redis/*
+project/*
+!*README

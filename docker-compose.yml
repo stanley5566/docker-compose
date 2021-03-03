@@ -1,0 +1,32 @@
+version: "2"
+services:
+  redis:
+    container_name: redis
+    build: 
+      context: ./redis
+      dockerfile: Dockerfile
+    volumes:
+      - ./redis/conf/redis.conf:/usr/local/redis/etc/redis.conf
+      - ./data/redis:/var/lib/redis
+    ports: 
+      - "16379:6379"
+    networks: 
+      - bankapi_network
+  mysql:
+    container_name: mysql
+    build: 
+      context: ./mysql
+      dockerfile: Dockerfile
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bankAPI
+    ports:
+      - "13306:3306"
+    volumes: 
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./data/mysql:/var/lib/mysql
+    networks: 
+      - bankapi_network
+networks:
+  bankapi_network:
+    driver: bridge
